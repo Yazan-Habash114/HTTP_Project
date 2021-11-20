@@ -72,11 +72,11 @@ public class DownloadUploadImage implements DownloadUpload {
                 }
             }
         } catch (MalformedURLException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,15 +114,15 @@ public class DownloadUploadImage implements DownloadUpload {
                     }
                     myWriter.close();
                 }
-                MainClient.statusTextArea.setText(SS);
+                MainWindowClient.statusTextArea.setText(SS);
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
