@@ -6,7 +6,7 @@ package httpClient;
  */
 public interface DownloadUpload {
 
-    public static final String contentStr = "application/x-www-form-urlencoded";
+    public static final String CONTENT_STR = "application/x-www-form-urlencoded";
 
     public void downloadPHP(String url);
 

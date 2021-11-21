@@ -40,7 +40,7 @@ public class DownloadUploadImage implements DownloadUpload {
             myConn.setDoOutput(true);
             myConn.setRequestMethod("POST");
             myConn.setDoInput(true);
-            myConn.setRequestProperty("Content-Type", contentStr);
+            myConn.setRequestProperty("Content-Type", CONTENT_STR);
             myConn.setUseCaches(false);
             String dataStr = URLEncoder.encode("download_image", "UTF-8") + "=" + selectedImage;
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
@@ -72,11 +72,11 @@ public class DownloadUploadImage implements DownloadUpload {
                 }
             }
         } catch (MalformedURLException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -91,7 +91,7 @@ public class DownloadUploadImage implements DownloadUpload {
             myConn.setDoOutput(true);
             myConn.setRequestMethod("POST");
             myConn.setDoInput(true);
-            myConn.setRequestProperty("Content-Type", contentStr);
+            myConn.setRequestProperty("Content-Type", CONTENT_STR);
             myConn.setUseCaches(false);
             String dataStr = URLEncoder.encode("download_image", "UTF-8") + "=" + selectedImage;
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
@@ -114,15 +114,15 @@ public class DownloadUploadImage implements DownloadUpload {
                     }
                     myWriter.close();
                 }
-                MainWindowClient.statusTextArea.setText(SS);
+                ClientInteractWindow.statusTextArea.setText(SS);
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MainWindowClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
