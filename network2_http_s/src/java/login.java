@@ -48,7 +48,6 @@ public class login extends HttpServlet {
             }
             c.close();
             out.print(flag);
-
         }
     }
 

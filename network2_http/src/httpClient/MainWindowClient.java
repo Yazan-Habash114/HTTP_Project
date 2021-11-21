@@ -88,7 +88,7 @@ public class MainWindowClient extends javax.swing.JFrame {
         username = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         Button_login = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         uploadImg = new javax.swing.JButton();
         downloadImg1 = new javax.swing.JButton();
@@ -166,8 +166,8 @@ public class MainWindowClient extends javax.swing.JFrame {
         });
         getContentPane().add(Button_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, 110, 30));
 
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 210, 30));
+        password.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 210, 30));
 
         jLabel2.setFont(new java.awt.Font("Fira Code", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -261,12 +261,12 @@ public class MainWindowClient extends javax.swing.JFrame {
 
     private void Button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_loginActionPerformed
         String user = username.getText();
-        String pass = jPasswordField1.getText();
+        String pass = password.getText();
         System.out.println(user + " " + pass);
         if (urlTF.getText().compareTo("Servlet") == 0 || urlTF.getText().compareTo("http://localhost:8080/my-site2/index.php") == 0) {
-
             if (user.compareTo("") == 0 || pass.compareTo("") == 0) {
-                JOptionPane.showMessageDialog(this, "Make sure to fill all blanks");
+                JOptionPane.showMessageDialog(this, "Make sure to fill all blanks correctly", "Data not completed",
+                        JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     dataStr = "";
@@ -284,7 +284,8 @@ public class MainWindowClient extends javax.swing.JFrame {
                     myConn.setDoInput(true);
                     myConn.setRequestProperty("Content-Type", contentStr);
                     myConn.setUseCaches(false);
-                    dataStr = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8") + "&" + URLEncoder.encode("pass", "UTF-8") + "=" + URLEncoder.encode(pass, "UTF-8");
+                    dataStr = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8")
+                            + "&" + URLEncoder.encode("pass", "UTF-8") + "=" + URLEncoder.encode(pass, "UTF-8");
                     BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream());
                     out.write(dataStr.getBytes());
                     out.close();
@@ -296,7 +297,6 @@ public class MainWindowClient extends javax.swing.JFrame {
                     }
                     if (myConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(myConn.getInputStream()))) {
-
                             if ((b = bufferedReader.read()) != -1) {
                                 SS = SS + (char) b;
                             }
@@ -305,7 +305,7 @@ public class MainWindowClient extends javax.swing.JFrame {
                             allow = true;
                         } else {
                             allow = false;
-                            JOptionPane.showMessageDialog(this, "Make sure login data is true");
+                            JOptionPane.showMessageDialog(this, "Make sure your data is correct");
                         }
                     }
 
@@ -319,7 +319,7 @@ public class MainWindowClient extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Choose server first");
+            JOptionPane.showMessageDialog(this, "Choose server, please!");
         }
     }//GEN-LAST:event_Button_loginActionPerformed
 
@@ -446,9 +446,7 @@ public class MainWindowClient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_downloadImg1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -503,8 +501,8 @@ public class MainWindowClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPasswordField password;
     public static javax.swing.JTextArea statusTextArea;
     private javax.swing.JButton uploadImg;
     private javax.swing.JComboBox<String> urlCombo;
