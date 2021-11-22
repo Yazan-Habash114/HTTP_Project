@@ -3,18 +3,8 @@ package httpClient;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -37,8 +27,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
     String[] strURLs = {
         "http://localhost:8080/my-site2/index.php", "Servlet"
     };
-    
-    
+
     // Methods
     private void addURLsToCombo() {
         this.urlCombo.removeAllItems();
@@ -55,7 +44,6 @@ public class ClientInteractWindow extends javax.swing.JFrame {
         addImageName();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -200,7 +188,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
 
     String contentStr = "application/x-www-form-urlencoded";
 
-    public static void addImageName() {
+    public void addImageName() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
@@ -208,7 +196,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
             String query = "SELECT name FROM image";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                imageCombo.addItem(rs.getString("name"));
+                getImageCombo().addItem(rs.getString("name"));
             }
             connection.close();     // Close connection with database
         } catch (ClassNotFoundException ex) {
@@ -220,22 +208,24 @@ public class ClientInteractWindow extends javax.swing.JFrame {
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         String str = (String) this.urlCombo.getSelectedItem();
-        this.urlTF.setText(str);
+        this.getUrlTF().setText(str);
     }//GEN-LAST:event_btnSelectActionPerformed
 
     private void downloadImagePHP(String url) {
-        String selectedImage = imageCombo.getSelectedItem().toString();
-        new DownloadUploadImage(selectedImage).downloadPHP(url);
+        String selectedImage = getImageCombo().getSelectedItem().toString();
+        new DownloadUploadImage(this, selectedImage).downloadPHP(url);
         putImage(selectedImage, true);
     }
-    
+
     private void putImage(String selectedImage, boolean src) {
         try {
             //System.out.print(SS);
             File file = new File("C:/Users/HP/" + selectedImage);
             BufferedImage image = ImageIO.read(file);
-            if(src)   // PHP
+            if (src) // PHP
+            {
                 ImageIO.write((BufferedImage) image, "jpg", file);
+            }
             ImageIcon icon = new ImageIcon(image);
             int h = icon.getIconHeight();
             int w = icon.getIconWidth();
@@ -254,14 +244,14 @@ public class ClientInteractWindow extends javax.swing.JFrame {
     }
 
     private void downloadImageServlet(String url) {
-        String selectedImage = imageCombo.getSelectedItem().toString();
-        new DownloadUploadImage(selectedImage).downloadServlet(url);
+        String selectedImage = getImageCombo().getSelectedItem().toString();
+        new DownloadUploadImage(this, selectedImage).downloadServlet(url);
         putImage(selectedImage, false);
     }
 
     private void uploadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadImgActionPerformed
-        if(imageCombo.getItemCount() + 1 <= 12 && description.getText().length() <= 500) {
-            new DownloadUploadImage().uploadImage();
+        if (getImageCombo().getItemCount() + 1 <= 12 && description.getText().length() <= 500) {
+            new DownloadUploadImage(this).uploadImage();
         } else {
             JOptionPane.showMessageDialog(this, "Max number of images has beed exceeded "
                     + "or description has more than 500 characters",
@@ -271,32 +261,32 @@ public class ClientInteractWindow extends javax.swing.JFrame {
 
     private void downloadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadImgActionPerformed
         String url = "";
-        if (urlTF.getText().compareTo("Servlet") == 0) {
+        if (getUrlTF().getText().compareTo("Servlet") == 0) {
             url = "http://localhost:8081/network2_http_s/download_image";
             downloadImageServlet(url);
         } else {
-            url = urlTF.getText();
+            url = getUrlTF().getText();
             downloadImagePHP(url);
         }
     }//GEN-LAST:event_downloadImgActionPerformed
 
     private void updateImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateImgActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_updateImgActionPerformed
 
     private void deleteImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteImgActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_deleteImgActionPerformed
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;
     private javax.swing.JButton deleteImg;
     private javax.swing.JTextArea description;
     private javax.swing.JButton downloadImg;
-    public static javax.swing.JLabel iconImage;
-    public static javax.swing.JComboBox<String> imageCombo;
-    public static javax.swing.JTextField imgTF;
+    private javax.swing.JLabel iconImage;
+    private javax.swing.JComboBox<String> imageCombo;
+    private javax.swing.JTextField imgTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -306,10 +296,30 @@ public class ClientInteractWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    public static javax.swing.JTextArea statusTextArea;
+    private javax.swing.JTextArea statusTextArea;
     private javax.swing.JButton updateImg;
     private javax.swing.JButton uploadImg;
     private javax.swing.JComboBox<String> urlCombo;
-    public static javax.swing.JTextField urlTF;
+    private javax.swing.JTextField urlTF;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JTextArea getStatusTextArea() {
+        return statusTextArea;
+    }
+
+    public javax.swing.JLabel getIconImg() {
+        return iconImage;
+    }
+
+    public javax.swing.JComboBox<String> getImageCombo() {
+        return imageCombo;
+    }
+
+    public javax.swing.JTextField getImgTF() {
+        return imgTF;
+    }
+
+    public javax.swing.JTextField getUrlTF() {
+        return urlTF;
+    }
 }

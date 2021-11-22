@@ -1,6 +1,5 @@
 package httpClient;
 
-import static httpClient.ClientInteractWindow.statusTextArea;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -24,7 +23,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,13 +31,15 @@ import javax.swing.JOptionPane;
 public class DownloadUploadImage implements DownloadUpload {
 
     private String selectedImage;
+    private ClientInteractWindow ciw;
     
-    public DownloadUploadImage() {
-        
+    public DownloadUploadImage(ClientInteractWindow ciw) {
+        this.ciw = ciw;
     }
 
-    public DownloadUploadImage(String selectedImage) {
+    public DownloadUploadImage(ClientInteractWindow ciw, String selectedImage) {
         this.selectedImage = selectedImage;
+        this.ciw = ciw;
     }
 
     @Override
@@ -59,7 +59,6 @@ public class DownloadUploadImage implements DownloadUpload {
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
                 out.write(dataStr.getBytes());
             }
-            String SS = "";
 
             if (myConn.getResponseCode() == 404) {
                 System.out.println("error!");
@@ -84,6 +83,7 @@ public class DownloadUploadImage implements DownloadUpload {
                     is.close();
                 }
             }
+            ciw.getStatusTextArea().setText("Your image has been download from server successfully");
         } catch (MalformedURLException ex) {
             Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
@@ -110,7 +110,6 @@ public class DownloadUploadImage implements DownloadUpload {
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
                 out.write(dataStr.getBytes());
             }
-            String SS = "";
 
             if (myConn.getResponseCode() == 404) {
                 System.out.println("error!");
@@ -122,13 +121,12 @@ public class DownloadUploadImage implements DownloadUpload {
             if (myConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(myConn.getInputStream()))) {
                     while ((b = bufferedReader.read()) != -1) {
-                        SS = SS + (char) b;
                         myWriter.write(b);
                     }
                     myWriter.close();
                 }
-                ClientInteractWindow.statusTextArea.setText(SS);
             }
+            ciw.getStatusTextArea().setText("Your image has been download from server successfully");
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -148,7 +146,7 @@ public class DownloadUploadImage implements DownloadUpload {
             choose.showOpenDialog(null);
             File f = choose.getSelectedFile();
             String filename = f.getAbsolutePath();
-            ClientInteractWindow.imgTF.setText(filename);
+            ciw.getImgTF().setText(filename);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             String lineEnd = "\r\n";
@@ -161,10 +159,10 @@ public class DownloadUploadImage implements DownloadUpload {
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
 
             URL url = null;
-            if (ClientInteractWindow.urlTF.getText().compareTo("Servlet") == 0) {
+            if (ciw.getUrlTF().getText().compareTo("Servlet") == 0) {
                 url = new URL("http://localhost:8081/network2_http_s/upload_image");
             } else {
-                url = new URL(ClientInteractWindow.urlTF.getText());
+                url = new URL(ciw.getUrlTF().getText());
             }
 
             // Open a HTTP  connection to  the URL
@@ -210,17 +208,11 @@ public class DownloadUploadImage implements DownloadUpload {
 
             int b = -1;
             dos.close();
-            String SS = "";
             if (conn.getResponseCode() == 404) {
                 System.out.println("error!");
             }
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                    while ((b = bufferedReader.read()) != -1) {
-                        SS = SS + (char) b;
-                    }
-                }
                 BufferedImage image = ImageIO.read(new File(filename));
                 ImageIcon icon = new ImageIcon(image);
                 int h = icon.getIconHeight();
@@ -232,13 +224,12 @@ public class DownloadUploadImage implements DownloadUpload {
                     w = 310;
                 }
                 icon = new ImageIcon(icon.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
-                ClientInteractWindow.iconImage.setIcon(icon);
+                ciw.getIconImg().setIcon(icon);
             }
-            statusTextArea.setText(SS);
-            ClientInteractWindow.imageCombo.removeAllItems();
-            ClientInteractWindow.addImageName();
-
-            //  Desktop.getDesktop().open(new java.io.File("text_file/rahaf.txt"));
+            ciw.getStatusTextArea().setText("Your image has been uploaded to server successfully");
+            ciw.getImageCombo().removeAllItems();
+            ciw.addImageName();
+            
         } catch (MalformedURLException ex) {
             Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
@@ -247,4 +238,5 @@ public class DownloadUploadImage implements DownloadUpload {
             Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }
