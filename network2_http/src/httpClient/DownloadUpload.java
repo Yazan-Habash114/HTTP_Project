@@ -11,4 +11,6 @@ public interface DownloadUpload {
     public void downloadPHP(String url);
 
     public void downloadServlet(String url);
+    
+    public void uploadImage();
 }

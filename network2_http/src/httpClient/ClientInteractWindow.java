@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -68,13 +68,19 @@ public class ClientInteractWindow extends javax.swing.JFrame {
         imageCombo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         imgTF = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        statusTextArea = new javax.swing.JTextArea();
-        jLabel6 = new javax.swing.JLabel();
+        iconImage = new javax.swing.JLabel();
         btnSelect = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         uploadImg = new javax.swing.JButton();
-        downloadImg1 = new javax.swing.JButton();
+        downloadImg = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        statusTextArea = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        description = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        updateImg = new javax.swing.JButton();
+        deleteImg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client Window");
@@ -83,42 +89,36 @@ public class ClientInteractWindow extends javax.swing.JFrame {
 
         urlCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         urlCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(urlCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 350, 30));
+        getContentPane().add(urlCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 370, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Choose URL:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 100, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 100, 30));
 
         urlTF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(urlTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 350, 30));
+        getContentPane().add(urlTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 370, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Choosen URL:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Select Images:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 30));
 
         imageCombo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         imageCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(imageCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 350, 30));
+        getContentPane().add(imageCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 370, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Selected Image:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 100, 30));
+        jLabel5.setText("Status:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 100, 30));
 
         imgTF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(imgTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 350, 30));
-
-        statusTextArea.setColumns(20);
-        statusTextArea.setRows(5);
-        jScrollPane1.setViewportView(statusTextArea);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 506, 270, 50));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 310, 220));
+        getContentPane().add(imgTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 370, 30));
+        getContentPane().add(iconImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 280, 190));
 
         btnSelect.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         btnSelect.setText("Select URL");
@@ -128,7 +128,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
                 btnSelectActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 120, 30));
+        getContentPane().add(btnSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 120, 30));
 
         jLabel2.setFont(new java.awt.Font("Fira Code", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -143,24 +143,64 @@ public class ClientInteractWindow extends javax.swing.JFrame {
                 uploadImgActionPerformed(evt);
             }
         });
-        getContentPane().add(uploadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 120, 30));
+        getContentPane().add(uploadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, 30));
 
-        downloadImg1.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
-        downloadImg1.setText("Download");
-        downloadImg1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        downloadImg1.addActionListener(new java.awt.event.ActionListener() {
+        downloadImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
+        downloadImg.setText("Download");
+        downloadImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        downloadImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                downloadImg1ActionPerformed(evt);
+                downloadImgActionPerformed(evt);
             }
         });
-        getContentPane().add(downloadImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 120, 30));
+        getContentPane().add(downloadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 100, 30));
+
+        statusTextArea.setColumns(20);
+        statusTextArea.setRows(5);
+        jScrollPane2.setViewportView(statusTextArea);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 370, 90));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Selected Image:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 100, 30));
+
+        description.setColumns(20);
+        description.setRows(5);
+        jScrollPane3.setViewportView(description);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 370, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Description:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 100, 30));
+
+        updateImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
+        updateImg.setText("Update");
+        updateImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        updateImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateImgActionPerformed(evt);
+            }
+        });
+        getContentPane().add(updateImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 80, 30));
+
+        deleteImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
+        deleteImg.setText("Delete");
+        deleteImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteImgActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     String contentStr = "application/x-www-form-urlencoded";
 
-    private void addImageName() {
+    public static void addImageName() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
@@ -206,7 +246,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
                 w = 310;
             }
             icon = new ImageIcon(icon.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
-            jLabel6.setIcon(icon);
+            iconImage.setIcon(icon);
             Desktop.getDesktop().open(new java.io.File("C:/Users/HP/" + selectedImage));
         } catch (IOException ex) {
             Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,114 +260,16 @@ public class ClientInteractWindow extends javax.swing.JFrame {
     }
 
     private void uploadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadImgActionPerformed
-        try {
-            OutputStream os;
-            InputStream is;
-            JFileChooser choose = new JFileChooser();
-            choose.showOpenDialog(null);
-            File f = choose.getSelectedFile();
-            String filename = f.getAbsolutePath();
-            imgTF.setText(filename);
-            HttpURLConnection conn = null;
-            DataOutputStream dos = null;
-            String lineEnd = "\r\n";
-            String twoHyphens = "--";
-            String boundary = "*****";
-            int bytesRead, bytesAvailable, bufferSize;
-            byte[] buffer;
-            int maxBufferSize = 1 * 1024 * 1024;
-            File sourceFile = new File(filename);
-            FileInputStream fileInputStream = new FileInputStream(sourceFile);
-
-            URL url = null;
-            if (urlTF.getText().compareTo("Servlet") == 0) {
-                url = new URL("http://localhost:8081/network2_http_s/upload_image");
-            } else {
-                url = new URL(urlTF.getText());
-            }
-
-            // Open a HTTP  connection to  the URL
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true); // Allow Inputs
-            conn.setDoOutput(true); // Allow Outputs
-            conn.setUseCaches(false); // Don't use a Cached Copy
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("uploaded_image", filename);
-
-            dos = new DataOutputStream(conn.getOutputStream());
-
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=uploaded_image;filename="
-                    + filename + "" + lineEnd);
-
-            dos.writeBytes(lineEnd);
-
-            bytesAvailable = fileInputStream.available();
-
-            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            buffer = new byte[bufferSize];
-
-            // read file and write it into form...
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-            while (bytesRead > 0) {
-                dos.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            }
-
-            int serverResponseCode = 0;
-            // Send multipart form data necesssary after file data...
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-            serverResponseCode = conn.getResponseCode();
-            String serverResponseMessage = conn.getResponseMessage();
-
-            int b = -1;
-            dos.close();
-            String SS = "";
-            if (conn.getResponseCode() == 404) {
-                System.out.println("error!");
-            }
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                    while ((b = bufferedReader.read()) != -1) {
-                        SS = SS + (char) b;
-                    }
-                }
-                BufferedImage image = ImageIO.read(new File(filename));
-                ImageIcon icon = new ImageIcon(image);
-                int h = icon.getIconHeight();
-                int w = icon.getIconWidth();
-                if (h > 220) {
-                    h = 220;
-                }
-                if (w > 310) {
-                    w = 310;
-                }
-                icon = new ImageIcon(icon.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
-                jLabel6.setIcon(icon);
-            }
-            statusTextArea.setText(SS);
-            imageCombo.removeAllItems();
-            addImageName();
-
-            //  Desktop.getDesktop().open(new java.io.File("text_file/rahaf.txt"));
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ProtocolException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+        if(imageCombo.getItemCount() + 1 <= 12 && description.getText().length() <= 500) {
+            new DownloadUploadImage().uploadImage();
+        } else {
+            JOptionPane.showMessageDialog(this, "Max number of images has beed exceeded "
+                    + "or description has more than 500 characters",
+                    "Cannot upload image due to this error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_uploadImgActionPerformed
 
-    private void downloadImg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadImg1ActionPerformed
+    private void downloadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadImgActionPerformed
         String url = "";
         if (urlTF.getText().compareTo("Servlet") == 0) {
             url = "http://localhost:8081/network2_http_s/download_image";
@@ -336,24 +278,38 @@ public class ClientInteractWindow extends javax.swing.JFrame {
             url = urlTF.getText();
             downloadImagePHP(url);
         }
-    }//GEN-LAST:event_downloadImg1ActionPerformed
+    }//GEN-LAST:event_downloadImgActionPerformed
+
+    private void updateImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateImgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateImgActionPerformed
+
+    private void deleteImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteImgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteImgActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;
-    private javax.swing.JButton downloadImg1;
-    private javax.swing.JComboBox<String> imageCombo;
-    private javax.swing.JTextField imgTF;
+    private javax.swing.JButton deleteImg;
+    private javax.swing.JTextArea description;
+    private javax.swing.JButton downloadImg;
+    public static javax.swing.JLabel iconImage;
+    public static javax.swing.JComboBox<String> imageCombo;
+    public static javax.swing.JTextField imgTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     public static javax.swing.JTextArea statusTextArea;
+    private javax.swing.JButton updateImg;
     private javax.swing.JButton uploadImg;
     private javax.swing.JComboBox<String> urlCombo;
-    private javax.swing.JTextField urlTF;
+    public static javax.swing.JTextField urlTF;
     // End of variables declaration//GEN-END:variables
 }
