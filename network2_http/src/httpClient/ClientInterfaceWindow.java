@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author Yazan Habash
  */
-public class ClientInteractWindow extends javax.swing.JFrame {
+public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     // Attributes
     public String dataStr;
@@ -37,7 +37,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
         this.urlCombo.setSelectedIndex(0);
     }
 
-    public ClientInteractWindow() {
+    public ClientInterfaceWindow() {
         initComponents();
         addURLsToCombo();
         imageCombo.removeAllItems();
@@ -200,9 +200,9 @@ public class ClientInteractWindow extends javax.swing.JFrame {
             }
             connection.close();     // Close connection with database
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -239,7 +239,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
             iconImage.setIcon(icon);
             Desktop.getDesktop().open(new java.io.File("C:/Users/HP/" + selectedImage));
         } catch (IOException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -262,7 +262,7 @@ public class ClientInteractWindow extends javax.swing.JFrame {
     private void downloadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadImgActionPerformed
         String url = "";
         if (getUrlTF().getText().compareTo("Servlet") == 0) {
-            url = "http://localhost:8081/network2_http_s/download_image";
+            url = "http://localhost:8081/network2_http_s/DownloadImage";
             downloadImageServlet(url);
         } else {
             url = getUrlTF().getText();

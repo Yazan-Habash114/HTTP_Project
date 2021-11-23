@@ -152,7 +152,7 @@ public class MainClientWindow extends javax.swing.JFrame {
                         }
                     }
                     if (SS.equals("1")) {
-                        new ClientInteractWindow().setVisible(true);
+                        new ClientInterfaceWindow().setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(this, "Make sure your data is correct",
                                 "Error info", JOptionPane.ERROR_MESSAGE);
@@ -160,11 +160,11 @@ public class MainClientWindow extends javax.swing.JFrame {
                 }
 
             } catch (MalformedURLException ex) {
-                Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ProtocolException ex) {
-                Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Button_loginActionPerformed

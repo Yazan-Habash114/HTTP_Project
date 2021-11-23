@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yazan Habash
  */
-@WebServlet(urlPatterns = {"/download_image"})
-public class download_image extends HttpServlet {
+@WebServlet(urlPatterns = {"/DownloadImage"})
+public class DownloadImage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +37,7 @@ public class download_image extends HttpServlet {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection c = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
-            String image = request.getParameter("download_image");
+            String image = request.getParameter("DownloadImage");
             Statement s = c.createStatement();
             String q = "SELECT * FROM `image` WHERE `name` = '" + image + "'";
             ResultSet sr = s.executeQuery(q);
@@ -46,7 +46,6 @@ public class download_image extends HttpServlet {
                 output = "C:/Users/HP/images/" + image;
             }
             c.close();
-            //out.print(output);
 
             PrintWriter out = response.getWriter();
             response.setContentType("application/octet-stream;charset=UTF-8");
@@ -79,9 +78,9 @@ public class download_image extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(download_image.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DownloadImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(download_image.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DownloadImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,9 +98,9 @@ public class download_image extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(download_image.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DownloadImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(download_image.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DownloadImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

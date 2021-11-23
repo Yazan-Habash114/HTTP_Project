@@ -1,9 +1,10 @@
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yazan Habash
  */
-@WebServlet(urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(urlPatterns = {"/UploadImage"})
+public class UploadImage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,21 +34,26 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String flag = "0";
         try (PrintWriter out = response.getWriter()) {
+            String header = request.getHeader("uploaded_image");
+            File srcfile = new File(header);
+            String name = srcfile.getName();
 
+            File destFile = new File("C:/Users/HP/images/" + name);
+            String destpath = destFile.getAbsolutePath();
+            Files.copy(srcfile.toPath(), destFile.toPath());
             Class.forName("com.mysql.jdbc.Driver");
             Connection c = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
-            String user = request.getParameter("user");
-            String pass = request.getParameter("pass");
             Statement s = c.createStatement();
-            String q = "SELECT * FROM `login` WHERE `username` = '" + user + "' AND `password` = '" + pass + "'";
-            ResultSet sr = s.executeQuery(q);
-            if (sr.next()) {
-                flag = "1";
-            }
+            String q = "INSERT INTO `image` (`name`, `image_dir`) VALUES ('" + name + "','" + destpath + "')";
+            int result = 0;
+            result = s.executeUpdate(q);
             c.close();
-            out.print(flag);
+            if (result > 0) {
+                out.print("New record created successfully");
+            } else {
+                out.print("Error while creating a new record to DB");
+            }
         }
     }
 
@@ -66,9 +72,9 @@ public class login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -86,9 +92,9 @@ public class login extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -31,13 +31,13 @@ import javax.swing.JFileChooser;
 public class DownloadUploadImage implements DownloadUpload {
 
     private String selectedImage;
-    private ClientInteractWindow ciw;
+    private ClientInterfaceWindow ciw;
     
-    public DownloadUploadImage(ClientInteractWindow ciw) {
+    public DownloadUploadImage(ClientInterfaceWindow ciw) {
         this.ciw = ciw;
     }
 
-    public DownloadUploadImage(ClientInteractWindow ciw, String selectedImage) {
+    public DownloadUploadImage(ClientInterfaceWindow ciw, String selectedImage) {
         this.selectedImage = selectedImage;
         this.ciw = ciw;
     }
@@ -85,11 +85,11 @@ public class DownloadUploadImage implements DownloadUpload {
             }
             ciw.getStatusTextArea().setText("Your image has been download from server successfully");
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -106,13 +106,13 @@ public class DownloadUploadImage implements DownloadUpload {
             myConn.setDoInput(true);
             myConn.setRequestProperty("Content-Type", CONTENT_STR);
             myConn.setUseCaches(false);
-            String dataStr = URLEncoder.encode("download_image", "UTF-8") + "=" + selectedImage;
+            String dataStr = URLEncoder.encode("DownloadImage", "UTF-8") + "=" + selectedImage;
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
                 out.write(dataStr.getBytes());
             }
 
             if (myConn.getResponseCode() == 404) {
-                System.out.println("error!");
+                System.out.println("Error!");
             }
 
             int b = -1;
@@ -129,11 +129,11 @@ public class DownloadUploadImage implements DownloadUpload {
             ciw.getStatusTextArea().setText("Your image has been download from server successfully");
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -149,9 +149,9 @@ public class DownloadUploadImage implements DownloadUpload {
             ciw.getImgTF().setText(filename);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
-            String lineEnd = "\r\n";
-            String twoHyphens = "--";
-            String boundary = "*****";
+            String endLine = "\r\n";
+            String hyphenSeparators = "--";
+            String boundary = "$$$";        // Random Text
             int bytesRead, bytesAvailable, bufferSize;
             byte[] buffer;
             int maxBufferSize = 1 * 1024 * 1024;
@@ -160,16 +160,16 @@ public class DownloadUploadImage implements DownloadUpload {
 
             URL url = null;
             if (ciw.getUrlTF().getText().compareTo("Servlet") == 0) {
-                url = new URL("http://localhost:8081/network2_http_s/upload_image");
+                url = new URL("http://localhost:8081/network2_http_s/UploadImage");
             } else {
                 url = new URL(ciw.getUrlTF().getText());
             }
 
             // Open a HTTP  connection to  the URL
             conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true); // Allow Inputs
-            conn.setDoOutput(true); // Allow Outputs
-            conn.setUseCaches(false); // Don't use a Cached Copy
+            conn.setDoInput(true);      // Allow Inputs
+            conn.setDoOutput(true);     // Allow Outputs
+            conn.setUseCaches(false);   // No caching
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
@@ -178,11 +178,11 @@ public class DownloadUploadImage implements DownloadUpload {
 
             dos = new DataOutputStream(conn.getOutputStream());
 
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes(hyphenSeparators + boundary + endLine);
             dos.writeBytes("Content-Disposition: form-data; name=uploaded_image;filename="
-                    + filename + "" + lineEnd);
+                    + filename + "" + endLine);
 
-            dos.writeBytes(lineEnd);
+            dos.writeBytes(endLine);    // Another endLine
 
             bytesAvailable = fileInputStream.available();
 
@@ -199,17 +199,17 @@ public class DownloadUploadImage implements DownloadUpload {
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
             }
 
-            int serverResponseCode = 0;
+            
             // Send multipart form data necesssary after file data...
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-            serverResponseCode = conn.getResponseCode();
+            dos.writeBytes(endLine);
+            dos.writeBytes(hyphenSeparators + boundary + hyphenSeparators + endLine);
+            int serverResponseCode = conn.getResponseCode();
             String serverResponseMessage = conn.getResponseMessage();
 
             int b = -1;
             dos.close();
             if (conn.getResponseCode() == 404) {
-                System.out.println("error!");
+                System.out.println("Error!");
             }
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -231,11 +231,11 @@ public class DownloadUploadImage implements DownloadUpload {
             ciw.addImageName();
             
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProtocolException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ClientInteractWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
