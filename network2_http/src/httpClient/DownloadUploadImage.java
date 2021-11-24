@@ -55,7 +55,7 @@ public class DownloadUploadImage implements DownloadUpload {
             myConn.setDoInput(true);
             myConn.setRequestProperty("Content-Type", CONTENT_STR);
             myConn.setUseCaches(false);
-            String dataStr = URLEncoder.encode("download_image", "UTF-8") + "=" + selectedImage;
+            String dataStr = URLEncoder.encode("DownloadImage", "UTF-8") + "=" + selectedImage;
             try (BufferedOutputStream out = new BufferedOutputStream(myConn.getOutputStream())) {
                 out.write(dataStr.getBytes());
             }
@@ -159,7 +159,7 @@ public class DownloadUploadImage implements DownloadUpload {
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
 
             URL url = null;
-            if (ciw.getUrlTF().getText().compareTo("Servlet") == 0) {
+            if (ciw.getUrlTF().getText().compareTo("Servlet Server") == 0) {
                 url = new URL("http://localhost:8081/network2_http_s/UploadImage");
             } else {
                 url = new URL(ciw.getUrlTF().getText());
@@ -174,12 +174,12 @@ public class DownloadUploadImage implements DownloadUpload {
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("uploaded_image", filename);
+            conn.setRequestProperty("UploadImage", filename);
 
             dos = new DataOutputStream(conn.getOutputStream());
 
             dos.writeBytes(hyphenSeparators + boundary + endLine);
-            dos.writeBytes("Content-Disposition: form-data; name=uploaded_image;filename="
+            dos.writeBytes("Content-Disposition: form-data; name=UploadImage;filename="
                     + filename + "" + endLine);
 
             dos.writeBytes(endLine);    // Another endLine
@@ -189,7 +189,7 @@ public class DownloadUploadImage implements DownloadUpload {
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
             buffer = new byte[bufferSize];
 
-            // read file and write it into form...
+            // Read the file and write it into the form
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
             while (bytesRead > 0) {
@@ -200,7 +200,7 @@ public class DownloadUploadImage implements DownloadUpload {
             }
 
             
-            // Send multipart form data necesssary after file data...
+            // Send multipart form data necesssary after file data
             dos.writeBytes(endLine);
             dos.writeBytes(hyphenSeparators + boundary + hyphenSeparators + endLine);
             int serverResponseCode = conn.getResponseCode();

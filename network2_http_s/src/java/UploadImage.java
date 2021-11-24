@@ -35,7 +35,7 @@ public class UploadImage extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String header = request.getHeader("uploaded_image");
+            String header = request.getHeader("UploadImage");
             File srcfile = new File(header);
             String name = srcfile.getName();
 

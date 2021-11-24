@@ -25,7 +25,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     // Attributes
     public String dataStr;
     String[] strURLs = {
-        "http://localhost:8080/my-site2/index.php", "Servlet"
+        "http://localhost:8080/phpServer/index.php", "Servlet Server"
     };
 
     // Methods
@@ -261,7 +261,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     private void downloadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadImgActionPerformed
         String url = "";
-        if (getUrlTF().getText().compareTo("Servlet") == 0) {
+        if (getUrlTF().getText().compareTo("Servlet Server") == 0) {
             url = "http://localhost:8081/network2_http_s/DownloadImage";
             downloadImageServlet(url);
         } else {

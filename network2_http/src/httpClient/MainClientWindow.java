@@ -126,7 +126,7 @@ public class MainClientWindow extends javax.swing.JFrame {
                 OutputStream os;
                 InputStream is;
 
-                String url = "http://localhost:8080/my-site2/index.php";   // Login by PHP
+                String url = "http://localhost:8080/phpServer/index.php";   // Login by PHP
                 URL u = new URL(url);
                 HttpURLConnection myConn = (HttpURLConnection) u.openConnection();
                 myConn.setDoOutput(true);
