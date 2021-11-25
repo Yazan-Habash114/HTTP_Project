@@ -250,8 +250,9 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     }
 
     private void uploadImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadImgActionPerformed
-        if (getImageCombo().getItemCount() + 1 <= 12 && description.getText().length() <= 500) {
+        if (getImageCombo().getItemCount() + 1 <= 12 && getDescription().getText().length() <= 500) {
             new DownloadUploadImage(this).uploadImage();
+            this.description.setText("");
         } else {
             JOptionPane.showMessageDialog(this, "Max number of images has beed exceeded "
                     + "or description has more than 500 characters",
@@ -271,11 +272,11 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_downloadImgActionPerformed
 
     private void updateImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateImgActionPerformed
-
+        
     }//GEN-LAST:event_updateImgActionPerformed
 
     private void deleteImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteImgActionPerformed
-
+        
     }//GEN-LAST:event_deleteImgActionPerformed
 
 
@@ -321,5 +322,9 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     public javax.swing.JTextField getUrlTF() {
         return urlTF;
+    }
+
+    public javax.swing.JTextArea getDescription() {
+        return description;
     }
 }

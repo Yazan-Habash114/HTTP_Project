@@ -29,6 +29,22 @@
   }
 
 
+  // Upload Description
+  if(isset($_REQUEST['desc']) && isset($_REQUEST['imgName'])) {
+     $desc = $_REQUEST['desc'];
+     $name = $_REQUEST['imgName'];
+
+     $connection = new mysqli($host, $root, $pass_word, $db);
+     if ($connection->connect_error)
+      die("Connection to DB is failed!");
+     else {
+       $sql = "UPDATE `images` SET `description` = '$desc' WHERE `name` = '$name'";
+       $result = $connection->query($sql);
+       $connection->close(); 
+     }
+  }
+
+
   // Uploading Image
   if(isset($_FILES['UploadImage'])) {
     if(is_uploaded_file($_FILES['UploadImage']['tmp_name'])) {
@@ -41,7 +57,7 @@
       if ($conn->connect_error)
         die("Connection to DB is failed!");
       else {
-        $sql = "INSERT INTO  images (name, image_dir) VALUES ('$txt','$sourcePath')";
+        $sql = "INSERT INTO  images (name, image_dir) VALUES ('$txt', '$sourcePath')";
         if ($conn->query($sql) === TRUE) {
           echo "New record created successfully";
         } else {

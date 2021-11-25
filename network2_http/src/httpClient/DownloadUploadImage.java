@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -46,7 +45,6 @@ public class DownloadUploadImage implements DownloadUpload {
     public void downloadPHP(String url) {
         try {
             URL u = new URL(url);
-            OutputStream os;
             InputStream is;
 
             HttpURLConnection myConn = (HttpURLConnection) u.openConnection();
@@ -97,8 +95,6 @@ public class DownloadUploadImage implements DownloadUpload {
     public void downloadServlet(String url) {
         try {
             URL u = new URL(url);
-            OutputStream os;
-            InputStream is;
 
             HttpURLConnection myConn = (HttpURLConnection) u.openConnection();
             myConn.setDoOutput(true);
@@ -140,33 +136,31 @@ public class DownloadUploadImage implements DownloadUpload {
     @Override
     public void uploadImage() {
         try {
-            OutputStream os;
-            InputStream is;
             JFileChooser choose = new JFileChooser();
             choose.showOpenDialog(null);
             File f = choose.getSelectedFile();
-            String filename = f.getAbsolutePath();
-            ciw.getImgTF().setText(filename);
-            HttpURLConnection conn = null;
-            DataOutputStream dos = null;
+            String fileName = f.getAbsolutePath();
+            ciw.getImgTF().setText(fileName);
             String endLine = "\r\n";
             String hyphenSeparators = "--";
             String boundary = "$$$";        // Random Text
             int bytesRead, bytesAvailable, bufferSize;
             byte[] buffer;
             int maxBufferSize = 1 * 1024 * 1024;
-            File sourceFile = new File(filename);
+            File sourceFile = new File(fileName);
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
 
-            URL url = null;
+            URL url = null, urlDescr = null;
             if (ciw.getUrlTF().getText().compareTo("Servlet Server") == 0) {
                 url = new URL("http://localhost:8081/network2_http_s/UploadImage");
+                urlDescr = new URL("http://localhost:8081/network2_http_s/UploadDescription");
             } else {
                 url = new URL(ciw.getUrlTF().getText());
+                urlDescr = new URL(ciw.getUrlTF().getText());
             }
-
-            // Open a HTTP  connection to  the URL
-            conn = (HttpURLConnection) url.openConnection();
+            
+            // Open a HTTP  connection (Send file)
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);      // Allow Inputs
             conn.setDoOutput(true);     // Allow Outputs
             conn.setUseCaches(false);   // No caching
@@ -174,13 +168,13 @@ public class DownloadUploadImage implements DownloadUpload {
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("UploadImage", filename);
+            conn.setRequestProperty("UploadImage", fileName);
 
-            dos = new DataOutputStream(conn.getOutputStream());
+            DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
             dos.writeBytes(hyphenSeparators + boundary + endLine);
             dos.writeBytes("Content-Disposition: form-data; name=UploadImage;filename="
-                    + filename + "" + endLine);
+                    + fileName + "" + endLine);
 
             dos.writeBytes(endLine);    // Another endLine
 
@@ -213,7 +207,7 @@ public class DownloadUploadImage implements DownloadUpload {
             }
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedImage image = ImageIO.read(new File(filename));
+                BufferedImage image = ImageIO.read(new File(fileName));
                 ImageIcon icon = new ImageIcon(image);
                 int h = icon.getIconHeight();
                 int w = icon.getIconWidth();
@@ -226,9 +220,35 @@ public class DownloadUploadImage implements DownloadUpload {
                 icon = new ImageIcon(icon.getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT));
                 ciw.getIconImg().setIcon(icon);
             }
-            ciw.getStatusTextArea().setText("Your image has been uploaded to server successfully");
             ciw.getImageCombo().removeAllItems();
             ciw.addImageName();
+            
+            // Open a HTTP connection (Send description)
+            HttpURLConnection descConnection = (HttpURLConnection) urlDescr.openConnection();
+            descConnection.setDoInput(true);
+            descConnection.setDoOutput(true);
+            descConnection.setUseCaches(false);
+            descConnection.setRequestMethod("POST");
+            descConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            
+            String imgName = new File(fileName).getName();
+            DataOutputStream descDOS = new DataOutputStream(descConnection.getOutputStream());
+            descDOS.writeBytes("desc=" + ciw.getDescription().getText() + "&" + "imgName=" + imgName);
+            descDOS.flush();
+            descDOS.close();
+            
+            String SS = "";
+            int bb = -1;
+            InputStream is = descConnection.getInputStream();
+            while ((bb = is.read()) != -1) {
+                if ((char) bb == '\r') {
+                    SS += "\n";
+                } else {
+                    SS = SS + (char) b;
+                }
+            }
+            
+            ciw.getStatusTextArea().setText("Your image has been uploaded to server successfully");
             
         } catch (MalformedURLException ex) {
             Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
