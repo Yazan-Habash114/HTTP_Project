@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2021 at 05:51 AM
+-- Generation Time: Nov 25, 2021 at 10:43 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -24,31 +24,39 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `image`
+-- Table structure for table `images`
 --
 
-CREATE TABLE `image` (
+CREATE TABLE `images` (
   `id` int(200) NOT NULL,
   `name` varchar(255) NOT NULL,
   `image_dir` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`id`, `name`, `image_dir`) VALUES
+(1, '10596.png', 'D:XAMPP	mpphp342.tmp'),
+(2, 'file000041.jpg', 'C:UsersHPimagesfile000041.jpg');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `login` (
+CREATE TABLE `users` (
   `username` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `login`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `login` (`username`, `password`) VALUES
+INSERT INTO `users` (`username`, `password`) VALUES
 ('yazan', '123456');
 
 --
@@ -56,9 +64,9 @@ INSERT INTO `login` (`username`, `password`) VALUES
 --
 
 --
--- Indexes for table `image`
+-- Indexes for table `images`
 --
-ALTER TABLE `image`
+ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -66,10 +74,10 @@ ALTER TABLE `image`
 --
 
 --
--- AUTO_INCREMENT for table `image`
+-- AUTO_INCREMENT for table `images`
 --
-ALTER TABLE `image`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `images`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

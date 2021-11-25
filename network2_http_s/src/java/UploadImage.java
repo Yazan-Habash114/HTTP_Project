@@ -45,7 +45,7 @@ public class UploadImage extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection c = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             Statement s = c.createStatement();
-            String q = "INSERT INTO `image` (`name`, `image_dir`) VALUES ('" + name + "','" + destpath + "')";
+            String q = "INSERT INTO `images` (`name`, `image_dir`) VALUES ('" + name + "','" + destpath + "')";
             int result = 0;
             result = s.executeUpdate(q);
             c.close();

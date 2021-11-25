@@ -39,7 +39,7 @@ public class DownloadImage extends HttpServlet {
             Connection c = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             String image = request.getParameter("DownloadImage");
             Statement s = c.createStatement();
-            String q = "SELECT * FROM `image` WHERE `name` = '" + image + "'";
+            String q = "SELECT * FROM `images` WHERE `name` = '" + image + "'";
             ResultSet sr = s.executeQuery(q);
             String output = "";
             if (sr.next()) {

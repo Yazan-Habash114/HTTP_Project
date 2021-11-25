@@ -14,13 +14,13 @@
     if ($conn->connect_error)
       die("Connection to DB is failed!");
     else {
-      $sql = "SELECT * from login";
+      $sql = "SELECT * from users";
       $result = $conn->query($sql);
       $f = 0;
       if($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc())
-          if($username==$row['username']&&$password==$row['password'])
+          if($username==$row['username'] && $password==$row['password'])
             $f=1;
         echo $f;
       }
@@ -41,7 +41,7 @@
       if ($conn->connect_error)
         die("Connection to DB is failed!");
       else {
-        $sql = "INSERT INTO  image (name,image_dir) VALUES ('$txt','$sourcePath')";
+        $sql = "INSERT INTO  images (name, image_dir) VALUES ('$txt','$sourcePath')";
         if ($conn->query($sql) === TRUE) {
           echo "New record created successfully";
         } else {

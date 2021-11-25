@@ -193,7 +193,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             Statement stmt = connection.createStatement();
-            String query = "SELECT name FROM image";
+            String query = "SELECT name FROM images";
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 getImageCombo().addItem(rs.getString("name"));
