@@ -30,7 +30,6 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     // Attributes
     private ImageWindow iw;
-    public String dataStr;
     String[] strURLs = {
         "http://localhost:8080/phpServer/index.php", "Servlet Server"
     };
@@ -111,12 +110,12 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Status:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 100, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 100, 30));
 
         imgTF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         imgTF.setToolTipText("Your selected image");
         getContentPane().add(imgTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 390, 30));
-        getContentPane().add(iconImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 260, 190));
+        getContentPane().add(iconImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 260, 190));
 
         btnSelect.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         btnSelect.setText("Select URL");
@@ -143,7 +142,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 uploadImgActionPerformed(evt);
             }
         });
-        getContentPane().add(uploadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 320, 90, 30));
+        getContentPane().add(uploadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 90, 30));
 
         downloadImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         downloadImg.setText("Download");
@@ -154,7 +153,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 downloadImgActionPerformed(evt);
             }
         });
-        getContentPane().add(downloadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 100, 30));
+        getContentPane().add(downloadImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 100, 30));
 
         jScrollPane2.setEnabled(false);
 
@@ -164,7 +163,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         statusTextArea.setToolTipText("Status of an operation");
         jScrollPane2.setViewportView(statusTextArea);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 390, 90));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 390, 90));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Selected Image:");
@@ -189,7 +188,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 updateImgActionPerformed(evt);
             }
         });
-        getContentPane().add(updateImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 90, 30));
+        getContentPane().add(updateImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 90, 30));
 
         deleteImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         deleteImg.setText("Delete");
@@ -200,7 +199,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 deleteImgActionPerformed(evt);
             }
         });
-        getContentPane().add(deleteImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, -1, 30));
+        getContentPane().add(deleteImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, -1, 30));
 
         showWindow.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         showWindow.setText("Show all images window");
