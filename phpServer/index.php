@@ -5,27 +5,18 @@
   $pass_word = '';
   $db = 'http_project';
 
-  // Authorization
-  if(isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
-    $username = $_REQUEST['user'];
-    $password = $_REQUEST['pass'];
-    
-    $conn = new mysqli($host, $root, $pass_word, $db);
-    if ($conn->connect_error)
-      die("Connection to DB is failed!");
-    else {
-      $sql = "SELECT * from users";
-      $result = $conn->query($sql);
-      $f = 0;
-      if($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc())
-          if($username==$row['username'] && $password==$row['password'])
-            $f=1;
-        echo $f;
-      }
-      $conn->close(); 
-    }
+
+  // Delete an image
+  if(isset($_REQUEST['imageName'])) {
+     $img_name = $_REQUEST['imageName'];
+     $connection = new mysqli($host, $root, $pass_word, $db);
+     if($connection->connect_error)
+	die('Connection to DB is failed!');
+     else {
+	$sql_query = "DELETE FROM `images` WHERE `name` = '$img_name'";
+	$result = $connection->query($sql_query);
+	$connection->close();
+     }
   }
 
 

@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yazan Habash
  */
-@WebServlet(urlPatterns = {"/UploadDescription"})
-public class UploadDescription extends HttpServlet {
+@WebServlet(urlPatterns = {"/DeleteImage"})
+public class DeleteImage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,21 +30,20 @@ public class UploadDescription extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException , ClassNotFoundException, SQLException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String description = request.getParameter("desc");
-            String name = request.getParameter("imgName");
+            String imageName = request.getParameter("imageName");
             
             Class.forName("com.mysql.jdbc.Driver");
             Connection c = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             Statement s = c.createStatement();
-            String q = "UPDATE `images` SET `description` = '" + description + "' WHERE `name` = '" + name + "'";
+            String q = "DELETE FROM `images` WHERE `name` = '" + imageName + "'";
             int result = 0;
             result = s.executeUpdate(q);
             c.close();
             if (result > 0) {
-                out.print("Description added successfully :)");
+                out.print("The selected image has been delete successfully :)");
             } else {
                 out.print("Error while creating a new record to DB");
             }
@@ -62,12 +62,12 @@ public class UploadDescription extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
+        try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,9 +85,9 @@ public class UploadDescription extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteImage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(UploadImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
