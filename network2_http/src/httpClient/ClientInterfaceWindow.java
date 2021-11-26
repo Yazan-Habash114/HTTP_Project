@@ -43,7 +43,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         addURLsToCombo();
         imageCombo.removeAllItems();
         iw = new ImageWindow();
-        addImageName();
+        addImageName(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -121,7 +121,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 btnSelectActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 120, 30));
+        getContentPane().add(btnSelect, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 220, 30));
 
         jLabel2.setFont(new java.awt.Font("Fira Code", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -194,7 +194,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         getContentPane().add(deleteImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, 30));
 
         showWindow.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
-        showWindow.setText("Show Window");
+        showWindow.setText("Show all images window");
         showWindow.setToolTipText("Show images window");
         showWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         showWindow.addActionListener(new java.awt.event.ActionListener() {
@@ -202,27 +202,28 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
                 showWindowActionPerformed(evt);
             }
         });
-        getContentPane().add(showWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 120, 30));
+        getContentPane().add(showWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 220, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     String contentStr = "application/x-www-form-urlencoded";
     
-    public void addImageName() throws IOException {
+    public void addImageName(boolean fromShowWindowBtn) throws IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             Statement stmt = connection.createStatement();
-            String query = "SELECT name FROM images";
+            String query = "SELECT name, description FROM images";
             ResultSet rs = stmt.executeQuery(query);
             iw.clearWindow();   // Clear images window
             while (rs.next()) {
                 getImageCombo().addItem(rs.getString("name"));
-                iw.addImg(rs.getString("name"));
+                iw.addImg(rs.getString("name"), rs.getString("description"));
             }
             connection.close();     // Close connection with database
-            iw.setVisible(true);
+            if(fromShowWindowBtn)
+                iw.setVisible(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -304,7 +305,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     private void showWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showWindowActionPerformed
         imageCombo.removeAllItems();
         try {
-            addImageName();
+            addImageName(true);
         } catch (IOException ex) {
             Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

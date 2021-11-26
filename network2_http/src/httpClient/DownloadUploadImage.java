@@ -221,7 +221,7 @@ public class DownloadUploadImage implements DownloadUpload {
                 ciw.getIconImg().setIcon(icon);
             }
             ciw.getImageCombo().removeAllItems();
-            ciw.addImageName();
+            ciw.addImageName(false);
             
             // Open a HTTP connection (Send description)
             HttpURLConnection descConnection = (HttpURLConnection) urlDescr.openConnection();
