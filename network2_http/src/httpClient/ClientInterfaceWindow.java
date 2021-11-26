@@ -3,8 +3,14 @@ package httpClient;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -295,7 +301,45 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_downloadImgActionPerformed
 
     private void updateImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateImgActionPerformed
-        
+        try {
+            // Open a HTTP connection (Send description)
+            URL urlDescr;
+            if (urlTF.getText().compareTo("Servlet Server") == 0) {
+                urlDescr = new URL("http://localhost:8081/network2_http_s/UploadDescription");
+            } else {
+                urlDescr = new URL(urlTF.getText());
+            }
+            HttpURLConnection descConnection = (HttpURLConnection) urlDescr.openConnection();
+            descConnection.setDoInput(true);
+            descConnection.setDoOutput(true);
+            descConnection.setUseCaches(false);
+            descConnection.setRequestMethod("POST");
+            descConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            
+            DataOutputStream descDOS = new DataOutputStream(descConnection.getOutputStream());
+            descDOS.writeBytes("desc=" + this.description.getText() + "&" + "imgName=" + (String) this.imageCombo.getSelectedItem());
+            descDOS.flush();
+            descDOS.close();
+            
+            String SS = "";
+            int bb = -1;
+            InputStream is = descConnection.getInputStream();
+            while ((bb = is.read()) != -1) {
+                if ((char) bb == '\r') {
+                    SS += "\n";
+                } else {
+                    SS = SS + (char) bb;
+                }
+            }
+            
+            statusTextArea.setText("The description of this image has been updated sucessfully");
+        } catch (ProtocolException ex) {
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_updateImgActionPerformed
 
     private void deleteImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteImgActionPerformed
