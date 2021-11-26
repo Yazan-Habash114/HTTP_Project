@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     // Attributes
+    private ImageWindow iw;
     public String dataStr;
     String[] strURLs = {
         "http://localhost:8080/phpServer/index.php", "Servlet Server"
@@ -37,10 +38,11 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         this.urlCombo.setSelectedIndex(0);
     }
 
-    public ClientInterfaceWindow() {
+    public ClientInterfaceWindow() throws IOException {
         initComponents();
         addURLsToCombo();
         imageCombo.removeAllItems();
+        iw = new ImageWindow();
         addImageName();
     }
 
@@ -69,6 +71,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         updateImg = new javax.swing.JButton();
         deleteImg = new javax.swing.JButton();
+        showWindow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client Window");
@@ -105,11 +108,13 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 100, 30));
 
         imgTF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        imgTF.setToolTipText("Your selected image");
         getContentPane().add(imgTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 370, 30));
         getContentPane().add(iconImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 280, 190));
 
         btnSelect.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         btnSelect.setText("Select URL");
+        btnSelect.setToolTipText("Select an URL to deal with");
         btnSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,6 +130,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         uploadImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         uploadImg.setText("Upload");
+        uploadImg.setToolTipText("Upload an image to server");
         uploadImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         uploadImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +141,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         downloadImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         downloadImg.setText("Download");
+        downloadImg.setToolTipText("Download an image from server");
         downloadImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         downloadImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +152,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         statusTextArea.setColumns(20);
         statusTextArea.setRows(5);
+        statusTextArea.setToolTipText("Status of an operation");
         jScrollPane2.setViewportView(statusTextArea);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 370, 90));
@@ -165,6 +173,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         updateImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         updateImg.setText("Update");
+        updateImg.setToolTipText("Update the description of an image");
         updateImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         updateImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +184,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
         deleteImg.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
         deleteImg.setText("Delete");
+        deleteImg.setToolTipText("Delete an image from server");
         deleteImg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,22 +193,36 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         });
         getContentPane().add(deleteImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, 30));
 
+        showWindow.setFont(new java.awt.Font("Fira Code", 2, 14)); // NOI18N
+        showWindow.setText("Show Window");
+        showWindow.setToolTipText("Show images window");
+        showWindow.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        showWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showWindowActionPerformed(evt);
+            }
+        });
+        getContentPane().add(showWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 120, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     String contentStr = "application/x-www-form-urlencoded";
-
-    public void addImageName() {
+    
+    public void addImageName() throws IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/http_project", "root", "");
             Statement stmt = connection.createStatement();
             String query = "SELECT name FROM images";
             ResultSet rs = stmt.executeQuery(query);
+            iw.clearWindow();   // Clear images window
             while (rs.next()) {
                 getImageCombo().addItem(rs.getString("name"));
+                iw.addImg(rs.getString("name"));
             }
             connection.close();     // Close connection with database
+            iw.setVisible(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -219,11 +243,9 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
 
     private void putImage(String selectedImage, boolean src) {
         try {
-            //System.out.print(SS);
             File file = new File("C:/Users/HP/" + selectedImage);
             BufferedImage image = ImageIO.read(file);
-            if (src) // PHP
-            {
+            if (src) {   // PHP
                 ImageIO.write((BufferedImage) image, "jpg", file);
             }
             ImageIcon icon = new ImageIcon(image);
@@ -279,6 +301,15 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_deleteImgActionPerformed
 
+    private void showWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showWindowActionPerformed
+        imageCombo.removeAllItems();
+        try {
+            addImageName();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientInterfaceWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_showWindowActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelect;
@@ -297,6 +328,7 @@ public class ClientInterfaceWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton showWindow;
     private javax.swing.JTextArea statusTextArea;
     private javax.swing.JButton updateImg;
     private javax.swing.JButton uploadImg;
