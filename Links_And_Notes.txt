@@ -2,10 +2,11 @@ Students Names:
 - Yazan Habash / 11819431
 - Afeef Moghaiar / 11642688
 
-Important Notes:
-- php file in the folder "phpServer", included in the files in the same submission.
-- There is a library we've needed to use "mysql-connectors" it has been attached with project files.
-- One folder named "network2_http" for the client side & the other one named "network2_http_s" for the server (Servlet part).
-
+Important Notes to be able to run the application:
+- php file in the folder "phpServer", included in the files in the same submission. It must be pasted to htdocs in XAMPP folder.
+- There is a library we've needed to use "mysql-connectors" installed from internet, it has been attached with project files.
+- One folder named "ClientSide" for the client side & the other one named "ServerSide" for the server (Servlet part).
+- When the user download an image it will be in "C:\Users\Hp".
+- Images saved in "C:\Users\Hp\images" (Must create images folder here), so database stores the id, name, directory and descriptions only.
 
 Here is the link of the demo in the following link on drive:

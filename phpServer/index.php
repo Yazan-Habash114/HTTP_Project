@@ -61,9 +61,9 @@
 
   // Download Image
   if(isset($_REQUEST["DownloadImage"])) {
-    $url='C:\\Users\\HP\\images';
+    $url = 'C:\\Users\\HP\\images';
     
-    $url_location=$url.'\\'.$_REQUEST["DownloadImage"];
+    $url_location = $url.'\\'.$_REQUEST["DownloadImage"];
     
     $file = $url_location;
     $handle = fopen($url_location, 'rb');
