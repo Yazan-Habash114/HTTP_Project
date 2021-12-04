@@ -10,3 +10,4 @@ Important Notes to be able to run the application:
 - Images saved in "C:\Users\Hp\images" (Must create images folder here), so database stores the id, name, directory and descriptions only.
 
 Here is the link of the demo in the following link on drive:
+https://drive.google.com/file/d/1bzp2uU8edDMxg0gx_LHrsvp0qXU8KIzN/view?usp=sharing
